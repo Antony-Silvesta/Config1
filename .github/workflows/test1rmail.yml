@@ -59,11 +59,12 @@ jobs:
     - name: Set Timezone to India Standard Time (IST)
       run: sudo timedatectl set-timezone Asia/Kolkata
 
-    - name: Run Selenium tests 
+    - name: Run Selenium tests
       id: run_tests
       run: |
-        pytest --html=report.html --self-contained-html > pytest_test_results.log || exit 0
+        pytest -v --html=report.html --self-contained-html > pytest_test_results.log
         cat pytest_test_results.log
+    
 
     
 
