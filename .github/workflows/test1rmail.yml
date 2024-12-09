@@ -62,11 +62,12 @@ jobs:
     - name: Run Selenium tests
       id: run_tests
       run: |
-        pytest -v --html=report.html --self-contained-html > pytest_test_results.log
+        pytest -v --html=report.html --self-contained-html | tee pytest_test_results.log
     
     - name: Display test results log
       run: |
         cat pytest_test_results.log
+    
     
 
     
