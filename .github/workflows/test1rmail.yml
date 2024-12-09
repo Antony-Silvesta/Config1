@@ -59,11 +59,15 @@ jobs:
     - name: Set Timezone to India Standard Time (IST)
       run: sudo timedatectl set-timezone Asia/Kolkata
 
+    - name: Print existing log file before running tests
+      run: cat pytest_test_results.log || echo "Log file doesn't exist yet."
+    
     - name: Run Selenium tests
       id: run_tests
       run: |
         pytest -v --html=report.html --self-contained-html > pytest_test_results.log
         cat pytest_test_results.log
+    
     
 
     
