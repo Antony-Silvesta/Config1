@@ -1,13 +1,46 @@
-from pymongo import MongoClient
+from db import connect_db
+def seed_database():
+    """Create a collection and insert seed data."""
+    db = connect_db()
+    try:
+        collection = db["users"]
+        collection.insert_many([
+            {
+            "username": "demo",
+            "first_name": "admin",
+            "last_name": "admin",
+            "password": "",
+            "mode_2fa": "Off",
+            "groups": ["Admin"],
+            "rights": "Admin",
+            "notes": {"info": "this 'notes' field exists only for this default admin user", "p": "donttrustyou"},
+            "vec_2fa": None,  # Corrected null to None
+            "baseurl": "https://demo.filebrowser.org/login?redirect=/files/",
+            "is_valid": False,
+            "expected_error": "Wrong credentials",
+        },
+        {
+            "username": "demo",
+            "first_name": "admin",
+            "last_name": "admin",
+            "password": "demo",
+            "mode_2fa": "Off",
+            "groups": ["Admin"],
+            "rights": "Admin",
+            "notes": {
+                "info": "this 'notes' field exists only for this default admin user",
+                "p": "donttrustyou"
+            },
+            "vec_2fa": None,  # Corrected null to None
+            "baseurl": "https://demo.filebrowser.org/login?redirect=/files/",
+            "is_valid": True,
+            "expected_error": "success",
+        }
 
-# Connect to MongoDB on localhost
-client = MongoClient("mongodb://localhost:27017/")
-
-# Create or access a database
-db = client["sampleupload"]  # Replace "my_database" with your desired database name
-
-# Create a collection with an option to ensure creation
-collection = db.create_collection("users", capped=False)
-
-# Print confirmation
-print(f"Database '{db.name}' and Collection '{collection.name}' are created.")
+           
+        ])
+        print("Seed data inserted successfully.")
+    except Exception as e:
+        print(f"Error seeding database: {e}")
+if __name__ == "__main__":
+    seed_database()
